@@ -23,7 +23,7 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  * @brief Given  a  sequences stored  in  an  array, we compute the
  * maximal  monotonic cutpoints by scannings the array and storing every
  * index that corresponds to a change in monotonicity (from increasing to
- *  decreasing, or viceversa).
+ * decreasing, or viceversa).
  */
 
 

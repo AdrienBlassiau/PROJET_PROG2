@@ -22,23 +22,23 @@ CC=gcc -Wall -Wextra -std=c11 -O2 -lm
 all : main
 
 main : main.o monotonic_cutpoints.o tools.o
-	$(CC) $^ -o $@
+	cd obj/ && $(CC) $^ -o ../bin/$@
 
-main.o : main.c
-	$(CC) -c $< -o $@
+main.o : src/main.c
+	$(CC) -c $< -o obj/$@
 
-monotonic_cutpoints.o : monotonic_cutpoints.c
-	$(CC) -c $< -o $@
+monotonic_cutpoints.o : src/monotonic_cutpoints.c
+	$(CC) -c $< -o obj/$@
 
-tools.o : tools.c
-	$(CC) -c $< -o $@
+tools.o : src/tools.c
+	$(CC) -c $< -o obj/$@
 
 doxygen : doc/Doxyfile
 	cd doc && doxygen ../$<
 
 .PHONY: clean
 clean :
-	rm -f *.o
+	rm -f obj/*
 	rm -rf doc/html/*
 	rm -rf doc/latex/*
-	rm -rf
+	rm -rf bin/*
