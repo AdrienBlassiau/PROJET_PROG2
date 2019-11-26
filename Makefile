@@ -24,7 +24,7 @@ all : main
 main : main.o monotonic_cutpoints.o monotonic_reverse.o tools.o merge.o
 	cd obj/ && $(CC) $^ -o ../bin/$@
 
-main.o : src/main.c
+main.o : src/main.c src/sort.h
 	$(CC) -c $< -o obj/$@
 
 monotonic_cutpoints.o : src/monotonic_cutpoints.c

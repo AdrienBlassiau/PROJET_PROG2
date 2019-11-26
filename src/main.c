@@ -2,9 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "monotonic_cutpoints.h"
-#include "monotonic_reverse.h"
-#include "merge.h"
+#include "sort.h"
 
 #define CAPACITY 100
 #define N 10
