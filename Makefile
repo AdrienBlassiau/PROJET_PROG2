@@ -21,7 +21,7 @@ CC=gcc -Wall -Wextra -std=c11 -O2 -lm
 
 all : main
 
-main : main.o monotonic_cutpoints.o monotonic_reverse.o tools.o
+main : main.o monotonic_cutpoints.o monotonic_reverse.o tools.o merge.o
 	cd obj/ && $(CC) $^ -o ../bin/$@
 
 main.o : src/main.c
@@ -31,6 +31,9 @@ monotonic_cutpoints.o : src/monotonic_cutpoints.c
 	$(CC) -c $< -o obj/$@
 
 monotonic_reverse.o : src/monotonic_reverse.c
+	$(CC) -c $< -o obj/$@
+
+merge.o : src/merge.c
 	$(CC) -c $< -o obj/$@
 
 tools.o : src/tools.c
