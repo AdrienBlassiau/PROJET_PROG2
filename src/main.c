@@ -1,23 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include "monotonic_cutpoints.h"
 
-
-#define N 100
+#define CAPACITY 100
+#define N 10
 
 int main(int argc,char* argv[])
 {
-  unsigned int i;
-  long tab[N] = {[0 ... 99] = 0};
+  int i,n;
+  int tab[CAPACITY] = {[0 ... CAPACITY-1] = 0};
+  size_t cutpoints[CAPACITY];
 
-  // if ((argc = argc > N ? N : argc-1) < 2)
-  //   return 0;
-
-  // for (i = 0, argv=argv+1; i < argc; tab[i++] = strtol(argv[i],NULL,0));
-
-  // get_monotonic_sequence(tab, N);
-
+  if ((argc = argc > N ? N : argc-1) < 3) {
+    srand(time(NULL));
+    for (i = 0, n = N; i < N; i++)
+      tab[i] = rand();
+  } else {
+    for (i = 0, argv=argv+1, n = argc; i < argc; i++)
+      tab[i] = strtol(argv[i],NULL,0);
+  }
+ 
   //Include your code here
-
+  
+  printf("%ld\n",monotonic(tab,n,cutpoints));
+  
   return 0;
 }
