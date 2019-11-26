@@ -21,13 +21,16 @@ CC=gcc -Wall -Wextra -std=c11 -O2 -lm
 
 all : main
 
-main : main.o monotonic_cutpoints.o
+main : main.o monotonic_cutpoints.o tools.o
 	$(CC) $^ -o $@
 
 main.o : main.c
 	$(CC) -c $< -o $@
 
 monotonic_cutpoints.o : monotonic_cutpoints.c
+	$(CC) -c $< -o $@
+
+tools.o : tools.c
 	$(CC) -c $< -o $@
 
 doxygen : doc/Doxyfile
