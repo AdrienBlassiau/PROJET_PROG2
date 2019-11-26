@@ -30,20 +30,17 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #ifndef MONOTONIC_CUTPOINTS_H
 #define MONOTONIC_CUTPOINTS_H
 
-typedef struct _MonotonicSolution MonotonicSolution;
+#include "include.h"
+
 
 /**
- * \struct _MonotonicSolution
- * \brief A sequence of the indexes of cutpoints and the size of this sequence
- *
+ * This function compute the monotonic cupoints of an int array
+ * @param  a         An int array
+ * @param  length    The length of the int array
+ * @param  cutpoints The array of the cutpoints
+ * @return           The size of the array of the cutpoints
  */
-struct _MonotonicSolution {
-  int*		monotonix_indexes;
-  int 		size;
-};
-
-
-int* get_monotonic_sequence(long int* array_to_sort);
+size_t monotonic(int* a, size_t length, size_t* cutpoints);
 
 
 #endif

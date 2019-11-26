@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include "monotonic_cutpoints.h"
 #include "tools.h"
-
-#include <stddef.h>
+#include "include.h"
 
 /*@ predicate monotone_slice(int* a, size_t low, size_t up) =
   (\forall integer i,j; low <= i < j < up ==> a[i] < a[j]) ||
