@@ -1,0 +1,23 @@
+\hypertarget{monotonic__cutpoints_8h}{}\section{/home/adrien/\+Documents/\+P\+R\+O\+G2/\+P\+R\+O\+J\+E\+T\+\_\+\+P\+R\+O\+G2/monotonic\+\_\+cutpoints.h File Reference}
+\label{monotonic__cutpoints_8h}\index{/home/adrien/\+Documents/\+P\+R\+O\+G2/\+P\+R\+O\+J\+E\+T\+\_\+\+P\+R\+O\+G2/monotonic\+\_\+cutpoints.\+h@{/home/adrien/\+Documents/\+P\+R\+O\+G2/\+P\+R\+O\+J\+E\+T\+\_\+\+P\+R\+O\+G2/monotonic\+\_\+cutpoints.\+h}}
+
+
+Balanced binary tree.  
+
+
+
+
+\subsection{Detailed Description}
+Balanced binary tree. 
+
+The A\+VL tree structure is a balanced binary tree which stores a collection of nodes (see A\+V\+L\+Tree\+Node). Each node has a key and a value associated with it. The nodes are sorted within the tree based on the order of their keys. Modifications to the tree are constructed such that the tree remains balanced at all times (there are always roughly equal numbers of nodes on either side of the tree).
+
+Balanced binary trees have several uses. They can be used as a mapping (searching for a value based on its key), or as a set of keys which is always ordered.
+
+To create a new A\+VL tree, use avl\+\_\+tree\+\_\+new. To destroy an A\+VL tree, use avl\+\_\+tree\+\_\+free.
+
+To insert a new key-\/value pair into an A\+VL tree, use avl\+\_\+tree\+\_\+insert. To remove an entry from an A\+VL tree, use avl\+\_\+tree\+\_\+remove or avl\+\_\+tree\+\_\+remove\+\_\+node.
+
+To search an A\+VL tree, use avl\+\_\+tree\+\_\+lookup or avl\+\_\+tree\+\_\+lookup\+\_\+node.
+
+Tree nodes can be queried using the avl\+\_\+tree\+\_\+node\+\_\+child, avl\+\_\+tree\+\_\+node\+\_\+parent, avl\+\_\+tree\+\_\+node\+\_\+key and avl\+\_\+tree\+\_\+node\+\_\+value functions. 
