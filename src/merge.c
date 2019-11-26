@@ -24,6 +24,7 @@ int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 	int third = 2;
 	int last = cutlength-1;
 	int i = 0;
+	int j, length_s, length_t;
 
 	int x,y,cut_first,cut_second,cut_third;
 
@@ -31,20 +32,22 @@ int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 
 		x = 0;
 		y = 0;
+		i = 0;
 		cut_first = cutpoints[first];
 		cut_second = cutpoints[second];
 		cut_third = cutpoints[third];
 
-		printf("first: %d/second: %d/third: %d\n",cut_first,cut_second,cut_third);
+		length_s = cut_second - cut_first;
+		length_t = cut_third - cut_second;
 
-		while (x < cut_second - cut_first && y < cut_third - cut_second){
-			if (cutpoints[x] < cutpoints[y+second]){
+		while (x < length_s && y < length_t){
+			if (a[x] < a[y+cut_second]){
 				sorted_list[i] = a[x];
 				x+=1;
 				i+=1;
 			}
 			else{
-				sorted_list[i] = a[y+second];
+				sorted_list[i] = a[y+cut_second];
 				y+=1;
 				i+=1;
 			}
@@ -57,9 +60,14 @@ int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 		}
 
 		while (y < cut_third - cut_second){
-			sorted_list[i] = a[y+second];
+			sorted_list[i] = a[y+cut_second];
 			y+=1;
 			i+=1;
+		}
+
+		for (j = 0; j < cut_third; j++)
+		{
+			a[j] = sorted_list[j];
 		}
 
 		second++;
