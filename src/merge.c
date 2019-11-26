@@ -74,5 +74,5 @@ int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 		third++;
 	}
 
-	return sorted_list;
+	return a;
 }

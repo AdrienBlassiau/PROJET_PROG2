@@ -38,7 +38,7 @@ int main(int argc,char* argv[])
 
   merge(tab,sorted_tab,cutpoints,cutlength);
 
-  for (i = 0; i < n; i++) printf("%d ",sorted_tab[i]);
+  for (i = 0; i < n; i++) printf("%d ",tab[i]);
   printf("\n");
 
   return 0;
