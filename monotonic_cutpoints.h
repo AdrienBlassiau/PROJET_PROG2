@@ -21,15 +21,29 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 /** @file monotonic_cutpoints.h
  *
  * @brief Given  a  sequences stored  in  an  array, we compute the
- * maximal  monotonic cutpoints by scanningsonce while
- * storing every index thatcorresponds to a change in monotonicity (from
- * increasing to decreasing, or viceversa), as shown in the following
- * algorithm
+ * maximal  monotonic cutpoints by scannings the array and storing every
+ * index that corresponds to a change in monotonicity (from increasing to
+ *  decreasing, or viceversa).
  */
 
 
 #ifndef MONOTONIC_CUTPOINTS_H
 #define MONOTONIC_CUTPOINTS_H
+
+typedef struct _MonotonicSolution MonotonicSolution;
+
+/**
+ * \struct _MonotonicSolution
+ * \brief A sequence of the indexes of cutpoints and the size of this sequence
+ *
+ */
+struct _MonotonicSolution {
+  int*		monotonix_indexes;
+  int 		size;
+};
+
+
+int* get_monotonic_sequence(long int* array_to_sort);
 
 
 #endif
