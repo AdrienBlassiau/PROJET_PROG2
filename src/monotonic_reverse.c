@@ -1,9 +1,39 @@
 #include "include.h"
 
-static void reverse_monome(int* a, size_t bg, size_t end)
+/*@ predicate increasing_slice(int* a, size_t low, size_t up) =
+  (\forall integer i,j; low <= i < j < up ==> a[i] <= a[j]);
+*/
+
+/*@ predicate decreasing_slice(int* a, size_t low, size_t up) =
+  (\forall integer i,j; low <= i <= j < up ==> a[i] >= a[j]);
+*/
+
+/*@ predicate monotone_slice(int* a, size_t low, size_t up) =
+  (\forall integer i,j; low <= i < j < up ==> a[i] < a[j]) ||
+  (\forall integer i,j; low <= i <= j < up ==> a[i] >= a[j]);
+*/
+
+
+/*@
+  requires length < 100;
+  requires 0<=bg<end<length;
+  requires a_valid: \valid(a + (0 .. length - 1));
+  requires decreasing_slice: decreasing_slice(a,bg,end);
+  assigns a[bg .. end];
+  ensures increasing: increasing_slice(a,bg,end);
+*/
+static void reverse_monome(int* a, size_t bg, size_t end, const size_t length)
 {
   size_t i,j;
   int r;
+
+  /*@
+    loop invariant inner_bound: bg <= i < j <= end;
+    loop assigns i;
+    loop assigns j;
+    loop assigns a[bg .. end];
+    loop variant j-i;
+  */
   for (i = bg, j = end; i < j; i++, j--) {
     r = a[i];
     a[i] = a[j];
@@ -11,13 +41,37 @@ static void reverse_monome(int* a, size_t bg, size_t end)
   }
 }
 
-int* reverse(int* a, const size_t* cutpoints, const size_t cutlength)
+/*@
+  requires length < 100;
+  requires cutlength > 0;
+  requires a_valid: \valid(a + (0 .. length - 1));
+  requires res_valid: \valid(cutpoints + (0 .. length));
+  requires sep: \separated(a + (0 .. length - 1), cutpoints + (0 .. length));
+  requires bounds:
+    \forall integer i; 0 <= i < cutlength ==> 0 <= cutpoints[i] <= length;
+  requires beg: cutpoints[0] == 0;
+  requires end: cutpoints[cutlength-1] == length;
+  requires monotonic:
+      \forall integer i; 0 <= i < cutlength-1 ==>
+      monotone_slice(a,cutpoints[i],cutpoints[i+1]);
+  assigns a[0 .. length-1];
+  ensures increasing:
+    \forall integer i; 0 <= i < cutlength-1 ==>
+    increasing_slice(a,cutpoints[i],cutpoints[i+1]);
+*/
+int* reverse(int* a, const size_t length, const size_t* cutpoints, const size_t cutlength)
 {
   size_t i;
 
+  /*@
+    loop invariant inner_bound: 0 <= i < cutlength;
+    loop assigns i;
+    loop assigns a[0 .. length-1];
+    loop variant cutlength-1-i;
+  */
   for (i = 0; i < cutlength-1; i++)
     if (a[cutpoints[i]] > a[cutpoints[i]+1])
-      reverse_monome(a,cutpoints[i],cutpoints[i+1]-1);
+      reverse_monome(a,cutpoints[i],cutpoints[i+1]-1,length);
 
   return a;
 }

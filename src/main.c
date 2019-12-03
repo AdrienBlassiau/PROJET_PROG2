@@ -31,7 +31,7 @@ int main(int argc,char* argv[])
   for (i = 0; i < n; i++) printf("%d ",tab[i]);
   printf("\n");
 
-  reverse(tab,cutpoints,cutlength);
+  reverse(tab,n,cutpoints,cutlength);
 
   for (i = 0; i < n; i++) printf("%d ",tab[i]);
   printf("\n");

@@ -1,22 +1,6 @@
 #include "include.h"
 #include "merge.h"
 
-// merged := []
-// x, y := 0, 0
-// while x < length(s) and y < length(t):
-// 	if s[x] < t[y]:
-// 		merged.extend(s[x])
-// 		x := x + 1
-// 	else:
-// 		merged.extend(t[y])
-// 		y := y + 1
-// # append any remaining tail of s or t
-// while x < length(s):
-// 	merged.extend(s[x])
-// 	x := x + 1
-// while y < length(t):
-// 	merged.extend(t[y])
-// 	y := y + 1
 
 int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 	int first = 0;

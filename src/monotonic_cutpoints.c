@@ -1,4 +1,5 @@
 #include "include.h"
+#include <stddef.h>
 #include "monotonic_cutpoints.h"
 #include "tools.h"
 
