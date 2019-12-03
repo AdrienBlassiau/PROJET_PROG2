@@ -16,7 +16,7 @@
 
 /*@
   requires length < 100;
-  requires 0<=bg<end<length;
+  requires 0<=bg<=end<length;
   requires a_valid: \valid(a + (0 .. length - 1));
   requires decreasing_slice: decreasing_slice(a,bg,end);
   assigns a[bg .. end];
@@ -28,7 +28,9 @@ static void reverse_monome(int* a, size_t bg, size_t end, const size_t length)
   int r;
 
   /*@
-    loop invariant inner_bound: bg <= i < j <= end;
+    loop invariant i_bound: bg <= i <= end;
+    loop invariant j_bound: bg <= j <= end;
+    loop invariant inner_bound: i <= j+1;
     loop assigns i;
     loop assigns j;
     loop assigns a[bg .. end];
