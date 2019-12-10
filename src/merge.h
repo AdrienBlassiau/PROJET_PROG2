@@ -34,7 +34,7 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 
-int* merge(int* a, int* sorted_list, size_t* cutpoints, const size_t cutlength);
+int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength);
 
 
 #endif
