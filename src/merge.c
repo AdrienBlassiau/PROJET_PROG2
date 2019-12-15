@@ -40,9 +40,13 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 	int third = 2;
 	int last = cutlength-1;
 	int i = 0;
-	int j, length_s, length_t = 0;
-
-	int x,y,cut_second,cut_third = 0;
+	int j =0;
+	int length_s = 0;
+	int length_t = 0;
+	int x  = 0;
+	int y  = 0;
+	int cut_second = 0;
+	int cut_third = 0;
 
 	/*@
 	    loop assigns x;
@@ -87,6 +91,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns i;
 		    loop assigns sorted_list[0 .. length - 1];
 
+			loop invariant length_t <= length;
+			loop invariant length_s <= length;
 		    loop invariant 0 <= i <= length_t+length_s-1;
 			loop invariant 0 <= x <= length_s;
 			loop invariant 0 <= y <= length_t;
@@ -112,6 +118,7 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns sorted_list[0 .. length - 1];
 
 		    loop invariant 0 <= x <= length_s;
+		    loop invariant 0 <= i <= length_t+length_s-1;
 		    loop variant length_s-x;
 		*/
 		while (x < length_s){
@@ -127,6 +134,7 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns sorted_list[0 .. length - 1];
 
 		    loop invariant 0 <= y <= length_t;
+		    loop invariant 0 <= i <= length_t+length_s-1;
 		    loop variant length_t-y;
 		*/
 		while (y < length_t){
