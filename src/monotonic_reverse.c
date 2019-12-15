@@ -78,9 +78,10 @@ int* reverse(int* a, const size_t length, const size_t* cutpoints, const size_t 
     loop assigns a[0 .. length-1];
     loop variant cutlength-1-i;
   */
-  for (i = 0; i < cutlength-1; i++)
-    if (a[cutpoints[i]] > a[cutpoints[i]+1])
+  for (i = 0; i < cutlength-1; i++){
+    if (a[cutpoints[i]] >= a[cutpoints[i+1]-1]){
       reverse_monome(a,cutpoints[i],cutpoints[i+1]-1,length);
-
+    }
+  }
   return a;
 }
