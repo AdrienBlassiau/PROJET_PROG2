@@ -8,12 +8,11 @@
 
 /*@
 	requires 1 <= length < 100;
+	requires 2 <= cutlength <= length + 1;
 
     requires a_valid: \valid(a + (0 .. length - 1));
     requires sorted_valid: \valid(sorted_list + (0 .. length - 1));
     requires res_valid: \valid(cutpoints + (0 .. cutlength-1));
-
-	requires cutlength <= length + 1;
 
     requires sep: \separated(a + (0 .. length - 1),sorted_list + (0 .. length - 1), cutpoints + (0 .. cutlength-1));
 
@@ -28,6 +27,8 @@
 
   	requires \forall integer i,j; 0 <= i < j <= cutlength-1 ==> cutpoints[j] - cutpoints[i] <= length;
 
+  	requires \forall integer i, j; 0 <= i < j <= cutlength-1 ==> cutpoints[i] <= cutpoints[j];
+
     assigns sorted_list[0 .. length-1];
 	assigns a[0 .. length-1];
 
@@ -35,16 +36,15 @@
 
 */
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength){
-	int first = 0;
-	int second = 1;
-	int third = 2;
+
+	int current_ind = 1;
 	int last = cutlength-1;
 	int i = 0;
-	int j =0;
+	int j = 0;
 	int length_s = 0;
 	int length_t = 0;
-	int x  = 0;
-	int y  = 0;
+	int x = 0;
+	int y = 0;
 	int cut_second = 0;
 	int cut_third = 0;
 
@@ -62,27 +62,32 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 	    loop assigns sorted_list[0 .. length - 1];
 		loop assigns a[0 .. length - 1];
 
-		loop invariant cut_second <= length;
-		loop invariant cut_third <= length;
-		loop invariant length_s <= length;
-		loop invariant length_t <= length;
-		loop invariant length_t + length_s <= length;
-		loop invariant y <= length_t;
-		loop invariant x <= length_s;
-		loop invariant y+cut_second <= length;
+		loop invariant 0 <= cut_second <= length;
+		loop invariant 0 <= cut_third <= length;
+		loop invariant 0 <= cut_third - length_s <= length_t;
+		loop invariant 0 <= length_s <= length;
+		loop invariant 0 <= length_t <= length;
+		loop invariant 0 <= length_t + length_s <= length;
+		loop invariant 0 <= y <= length_t;
+		loop invariant 0 <= x <= length_s;
+		loop invariant 0 <= y+cut_second <= length;
+		loop invariant 0 <= i <= length;
+		loop invariant cut_third - length_s >= 0;
+		loop invariant current_ind < last ==> cutpoints[current_ind+1] >= cutpoints[current_ind];
 
-	    loop variant last-second;
+	    loop variant last-current_ind;
 	*/
-	while (second < last){ /*Tant qu'il y a deux sous tableaux à fusionner*/
+	while (current_ind < last){ /*Tant qu'il y a deux sous tableaux à fusionner*/
 		x = 0; /*Pointe sur la xème case du premier sous tableau trié de a*/
 		y = 0; /*Pointe sur la yème case du deuxième sous tableau trié de a*/
-		i = 0; /*Pointe sur la ième case de sorted_list dans lequel on copie progressivement la fusion des deux premiers sous tableau non trié*/
+		i = 0; /*Pointe sur la ième case de sorted_list dans lequel on copie
+		progressivement la fusion des deux premiers sous tableau non trié*/
 
-		cut_second = cutpoints[second]; /*Premier indice du deuxième sous tableau trié*/
-		cut_third = cutpoints[third]; /*Premier indice du troisième sous tableau */
+		cut_second = cutpoints[current_ind]; /*Premier indice du deuxième sous tableau trié*/
+		cut_third = cutpoints[current_ind+1]; /*Premier indice du troisième sous tableau */
 
 		length_s = cut_second; /*Longueur du premier sous-tableau trié*/
-		length_t = cut_third - cut_second; /*Longueur du deuxième sous-tableau trié*/
+		length_t = cut_third - length_s; /*Longueur du deuxième sous-tableau trié*/
 
 
 		/*@
@@ -91,15 +96,16 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns i;
 		    loop assigns sorted_list[0 .. length - 1];
 
-			loop invariant length_t <= length;
-			loop invariant length_s <= length;
-		    loop invariant 0 <= i <= length_t+length_s-1;
+			loop invariant 0 <= length_t <= length;
+			loop invariant 0 <= length_s <= length;
+
+		    loop invariant 0 <= i <= length;
 			loop invariant 0 <= x <= length_s;
 			loop invariant 0 <= y <= length_t;
 
-		    loop variant length_s+length_t-(x+y);
+		    loop variant length_s+length_t+length-(x+y+i);
 		*/
-		while (x < length_s && y < length_t){
+		while (x < length_s && y < length_t && i < length){
 			/* Tant qu'on peut toujours itérer sur les deux sous-tableaux */
 			if (a[x] < a[y+cut_second]){
 				sorted_list[i] = a[x];
@@ -117,11 +123,14 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns i;
 		    loop assigns sorted_list[0 .. length - 1];
 
+			loop invariant 0 <= length_t <= length;
+			loop invariant 0 <= length_s <= length;
+
 		    loop invariant 0 <= x <= length_s;
-		    loop invariant 0 <= i <= length_t+length_s-1;
-		    loop variant length_s-x;
+		    loop invariant 0 <= i <= length;
+		    loop variant length_s+length-(x+i);
 		*/
-		while (x < length_s){
+		while (x < length_s && i < length){
 			/* Tant qu'on peut toujours itérer sur le premier sous tableau */
 			sorted_list[i] = a[x];
 			x+=1;
@@ -133,11 +142,14 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns i;
 		    loop assigns sorted_list[0 .. length - 1];
 
+			loop invariant 0 <= length_t <= length;
+			loop invariant 0 <= length_s <= length;
+
 		    loop invariant 0 <= y <= length_t;
-		    loop invariant 0 <= i <= length_t+length_s-1;
-		    loop variant length_t-y;
+		    loop invariant 0 <= i <= length;
+		    loop variant length_t+length-(y+i);
 		*/
-		while (y < length_t){
+		while (y < length_t && i < length){
 			/* Tant qu'on peut toujours itérer sur le deuxième sous tableau */
 			sorted_list[i] = a[y+cut_second];
 			y+=1;
@@ -156,8 +168,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 			a[j] = sorted_list[j];
 		}
 
-		second++;/* On décale les sous tableaux*/
-		third++;
+		current_ind++;/* On décale les sous tableaux*/
+		/*@ assert current_ind <= cutlength - 1 ;*/
 	}
 
 	return a;
