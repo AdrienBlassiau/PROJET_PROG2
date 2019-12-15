@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2005-2008, Simon Howard
+Copyright (c) 2019-2020, Virgile PREVOSTO
 
 Permission to use, copy, modify, and/or distribute this software
 for any purpose with or without fee is hereby granted, provided
