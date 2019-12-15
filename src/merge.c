@@ -7,7 +7,7 @@
 */
 
 /*@
-	requires length < 100;
+	requires 1 <= length < 100;
 
     requires a_valid: \valid(a + (0 .. length - 1));
     requires sorted_valid: \valid(sorted_list + (0 .. length - 1));
@@ -31,17 +31,18 @@
     assigns sorted_list[0 .. length-1];
 	assigns a[0 .. length-1];
 
-	ensures sorted_result: \forall integer i; 0 <= i < length-1 ==> a[i] <= a[i+1];
+	// ensures sorted_result: \forall integer i; 0 <= i < length-1 ==> a[i] <= a[i+1];
 
 */
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength){
+	int first = 0;
 	int second = 1;
 	int third = 2;
 	int last = cutlength-1;
 	int i = 0;
-	int j, length_s, length_t;
+	int j, length_s, length_t = 0;
 
-	int x,y,cut_second,cut_third;
+	int x,y,cut_second,cut_third = 0;
 
 	/*@
 	    loop assigns x;
@@ -56,6 +57,15 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 
 	    loop assigns sorted_list[0 .. length - 1];
 		loop assigns a[0 .. length - 1];
+
+		loop invariant cut_second <= length;
+		loop invariant cut_third <= length;
+		loop invariant length_s <= length;
+		loop invariant length_t <= length;
+		loop invariant length_t + length_s <= length;
+		loop invariant y <= length_t;
+		loop invariant x <= length_s;
+		loop invariant y+cut_second <= length;
 
 	    loop variant last-second;
 	*/
@@ -75,7 +85,7 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns x;
 		    loop assigns y;
 		    loop assigns i;
-		    loop assigns sorted_list[0 .. length_t+length_s];
+		    loop assigns sorted_list[0 .. length - 1];
 
 		    loop invariant 0 <= i <= length_t+length_s-1;
 			loop invariant 0 <= x <= length_s;
@@ -99,9 +109,9 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		/*@
 		    loop assigns x;
 		    loop assigns i;
-		    loop assigns sorted_list[0 .. length_t+length_s];
+		    loop assigns sorted_list[0 .. length - 1];
 
-		    loop invariant 0 <= x < length_s;
+		    loop invariant 0 <= x <= length_s;
 		    loop variant length_s-x;
 		*/
 		while (x < length_s){
@@ -114,9 +124,9 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		/*@
 		    loop assigns y;
 		    loop assigns i;
-		    loop assigns sorted_list[0 .. length_t+length_s];
+		    loop assigns sorted_list[0 .. length - 1];
 
-		    loop invariant 0 <= y < length_t;
+		    loop invariant 0 <= y <= length_t;
 		    loop variant length_t-y;
 		*/
 		while (y < length_t){
