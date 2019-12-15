@@ -38,7 +38,6 @@
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength){
 
 	int current_ind = 1;
-	int last = cutlength-1;
 	int i = 0;
 	int j = 0;
 	int length_s = 0;
@@ -73,11 +72,11 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		loop invariant 0 <= y+cut_second <= length;
 		loop invariant 0 <= i <= length;
 		loop invariant cut_third - length_s >= 0;
-		loop invariant current_ind < last ==> cutpoints[current_ind+1] >= cutpoints[current_ind];
+		loop invariant current_ind < cutlength-1 ==> cutpoints[current_ind+1] >= cutpoints[current_ind];
 
-	    loop variant last-current_ind;
+	    loop variant cutlength-current_ind-1;
 	*/
-	while (current_ind < last){ /*Tant qu'il y a deux sous tableaux à fusionner*/
+	while (current_ind < cutlength-1){ /*Tant qu'il y a deux sous tableaux à fusionner*/
 		x = 0; /*Pointe sur la xème case du premier sous tableau trié de a*/
 		y = 0; /*Pointe sur la yème case du deuxième sous tableau trié de a*/
 		i = 0; /*Pointe sur la ième case de sorted_list dans lequel on copie
