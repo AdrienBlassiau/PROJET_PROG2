@@ -27,7 +27,7 @@
 
   	requires \forall integer i,j; 0 <= i < j <= cutlength-1 ==> cutpoints[j] - cutpoints[i] <= length;
 
-  	requires \forall integer i, j; 0 <= i < j <= cutlength-1 ==> cutpoints[i] <= cutpoints[j];
+  	requires \forall integer i; 0 <= i < cutlength-1 ==> cutpoints[i] <= cutpoints[i+1];
 
     assigns sorted_list[0 .. length-1];
 	assigns a[0 .. length-1];
@@ -51,9 +51,11 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 	    loop assigns x;
 	    loop assigns y;
 	    loop assigns i;
+		loop assigns j;
 
 	    loop assigns cut_second;
 	    loop assigns cut_third;
+	    loop assigns current_ind;
 
 	    loop assigns length_s;
 	    loop assigns length_t;
@@ -73,6 +75,7 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		loop invariant 0 <= i <= length;
 		loop invariant cut_third - length_s >= 0;
 		loop invariant current_ind < cutlength-1 ==> cutpoints[current_ind+1] >= cutpoints[current_ind];
+		loop invariant current_ind <= cutlength-1;
 
 	    loop variant cutlength-current_ind-1;
 	*/
@@ -157,9 +160,11 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 
 
 		/*@
-		    loop invariant inner_bound: 0 <= j <= length_t+length_s;
 		    loop assigns j;
-		    loop assigns a[0 .. length_t+length_s-1];
+		    loop assigns a[0 .. length-1];
+
+		    loop invariant inner_bound: 0 <= j <= length_t+length_s;
+
 		    loop variant length_t+length_s-j;
 	  	*/
 		for (j = 0; j < length_t+length_s; j++){
