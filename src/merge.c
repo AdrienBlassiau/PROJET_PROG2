@@ -13,7 +13,9 @@
     requires sorted_valid: \valid(sorted_list + (0 .. length - 1));
     requires res_valid: \valid(cutpoints + (0 .. cutlength-1));
 
-    requires sep: \separated(a + (0 .. length - 1),sorted_list + (0 .. length - 1), cutpoints + (0 .. length));
+	requires cutlength <= length + 1;
+
+    requires sep: \separated(a + (0 .. length - 1),sorted_list + (0 .. length - 1), cutpoints + (0 .. cutlength-1));
 
     requires increasing:
     \forall integer i; 0 <= i < cutlength-1 ==>
@@ -22,6 +24,10 @@
     requires beg: cutpoints[0] == 0;
   	requires end: cutpoints[cutlength-1] == length;
 
+  	requires \forall integer i; 0 <= i <= cutlength-1 ==> cutpoints[i] <= length;
+
+  	requires \forall integer i,j; 0 <= i < j <= cutlength-1 ==> cutpoints[j] - cutpoints[i] <= length;
+
     assigns sorted_list[0 .. length-1];
 	assigns a[0 .. length-1];
 
@@ -29,25 +35,39 @@
 
 */
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength){
-	int first = 0;
 	int second = 1;
 	int third = 2;
 	int last = cutlength-1;
 	int i = 0;
 	int j, length_s, length_t;
 
-	int x,y,cut_first,cut_second,cut_third;
+	int x,y,cut_second,cut_third;
 
+	/*@
+	    loop assigns x;
+	    loop assigns y;
+	    loop assigns i;
+
+	    loop assigns cut_second;
+	    loop assigns cut_third;
+
+	    loop assigns length_s;
+	    loop assigns length_t;
+
+	    loop assigns sorted_list[0 .. length - 1];
+		loop assigns a[0 .. length - 1];
+
+	    loop variant last-second;
+	*/
 	while (second < last){ /*Tant qu'il y a deux sous tableaux à fusionner*/
 		x = 0; /*Pointe sur la xème case du premier sous tableau trié de a*/
 		y = 0; /*Pointe sur la yème case du deuxième sous tableau trié de a*/
 		i = 0; /*Pointe sur la ième case de sorted_list dans lequel on copie progressivement la fusion des deux premiers sous tableau non trié*/
 
-		cut_first = cutpoints[first]; /*Premier indice du premier sous tableau trié*/
 		cut_second = cutpoints[second]; /*Premier indice du deuxième sous tableau trié*/
 		cut_third = cutpoints[third]; /*Premier indice du troisième sous tableau */
 
-		length_s = cut_second - cut_first; /*Longueur du premier sous-tableau trié*/
+		length_s = cut_second; /*Longueur du premier sous-tableau trié*/
 		length_t = cut_third - cut_second; /*Longueur du deuxième sous-tableau trié*/
 
 
@@ -57,9 +77,9 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 		    loop assigns i;
 		    loop assigns sorted_list[0 .. length_t+length_s];
 
-		    loop invariant 0 <= i <= length_t+length_s;
-			loop invariant 0 <= x < length_s;
-			loop invariant 0 <= y < length_t;
+		    loop invariant 0 <= i <= length_t+length_s-1;
+			loop invariant 0 <= x <= length_s;
+			loop invariant 0 <= y <= length_t;
 
 		    loop variant length_s+length_t-(x+y);
 		*/
@@ -68,13 +88,12 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
 			if (a[x] < a[y+cut_second]){
 				sorted_list[i] = a[x];
 				x+=1;
-				i+=1;
 			}
 			else{
 				sorted_list[i] = a[y+cut_second];
 				y+=1;
-				i+=1;
 			}
+			i+=1;
 		}
 
 		/*@
