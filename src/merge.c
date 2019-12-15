@@ -23,11 +23,11 @@
     requires beg: cutpoints[0] == 0;
     requires end: cutpoints[cutlength-1] == length;
 
-    requires \forall integer i; 0 <= i <= cutlength-1 ==> 0 <= cutpoints[i] <= length;
+    requires \forall integer i; 0 <= i < cutlength-1 ==> 0 <= cutpoints[i] < length;
 
-    requires \forall integer i,j; 0 <= i < j <= cutlength-1 ==> 0 <= cutpoints[j] - cutpoints[i] <= length;
-
-    requires \forall integer i; 0 <= i < cutlength-1 ==> cutpoints[i] <= cutpoints[i+1];
+    requires \forall integer i,j; 0 <= i < j < cutlength-1 ==> 0 <= cutpoints[j] - cutpoints[i] < length;
+    
+    requires \forall integer i; 0 <= i < cutlength-1 ==> cutpoints[i] < cutpoints[i+1];
 
     assigns sorted_list[0 .. length-1];
     assigns a[0 .. length-1];
@@ -35,8 +35,8 @@
     // ensures sorted_result: \forall integer i; 0 <= i < length-1 ==> a[i] <= a[i+1];
 
 */
-int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength){
-
+int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength)
+{
   size_t current_ind = 1;
   size_t i = 0;
   size_t j = 0;
@@ -80,8 +80,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
       loop assigns i;
       loop assigns sorted_list[0 .. length - 1];
 
-      loop invariant 0 <= length_t <= length;
       loop invariant 0 <= length_s <= length;
+      loop invariant 0 <= length_t <= length;
 
       loop invariant 0 <= length_t + length_s <= length;
 
