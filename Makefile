@@ -24,6 +24,10 @@ all : main
 main : main.o monotonic_cutpoints.o monotonic_reverse.o tools.o merge.o
 	cd obj/ && $(CC) $^ -o ../bin/$@
 
+
+test : main_test.o monotonic_cutpoints.o monotonic_reverse.o tools.o merge.o test_unit.o
+	cd obj/ && $(CC) $^ -o ../bin/$@ -lcunit
+
 main.o : src/main.c src/sort.h
 	$(CC) -c $< -o obj/$@
 
@@ -37,6 +41,12 @@ merge.o : src/merge.c
 	$(CC) -c $< -o obj/$@
 
 tools.o : src/tools.c
+	$(CC) -c $< -o obj/$@
+
+main_test.o : test/main_test.c src/sort.h
+	$(CC) -c $< -o obj/$@
+
+test_unit.o : test/test_unit.c src/include.h
 	$(CC) -c $< -o obj/$@
 
 doxygen : doc/Doxyfile

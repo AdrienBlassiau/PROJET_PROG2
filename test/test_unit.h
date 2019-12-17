@@ -18,14 +18,30 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 */
 
-#ifndef __INCLUDE__
-#define __INCLUDE__
+/** @file test_unit.h
+ *
+ * @brief Unit tests of the projects
+ *
+ */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <math.h>
-#include <time.h>
+#ifndef _TEST_UNIT_
+#define _TEST_UNIT_
+
+#include "CUnit/CUnit.h"
+#include "CUnit/Basic.h"
+
+
+
+/**
+ * @brief	This function inits all tests
+ * @return  an integer
+ */
+int init_test(void);
+
+
+/**
+ * @brief	This function tests if pf is well formed.
+ */
+void well_formed_pf(void);
 
 #endif

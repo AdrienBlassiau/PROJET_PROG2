@@ -129,8 +129,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
         loop assigns i;
         loop assigns sorted_list[0 .. length - 1];
 
-      loop invariant 0 <= length_t <= length;
-      loop invariant 0 <= length_s <= length;
+        loop invariant 0 <= length_t <= length;
+        loop invariant 0 <= length_s <= length;
 
         loop invariant 0 <= x <= length_s;
         loop invariant 0 <= i <= length;
@@ -148,8 +148,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
         loop assigns i;
         loop assigns sorted_list[0 .. length - 1];
 
-      loop invariant 0 <= length_t <= length;
-      loop invariant 0 <= length_s <= length;
+        loop invariant 0 <= length_t <= length;
+        loop invariant 0 <= length_s <= length;
 
         loop invariant 0 <= y <= length_t;
         loop invariant 0 <= i <= length;

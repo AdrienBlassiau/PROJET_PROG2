@@ -18,14 +18,20 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 */
 
-#ifndef __INCLUDE__
-#define __INCLUDE__
+#include "CUnit/CUnit.h"
+#include "CUnit/Basic.h"
+#include "test_unit.h"
+#include "../src/include.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <math.h>
-#include <time.h>
 
-#endif
+int main()
+{
+  printf("\n---------------------------\n");
+  printf("\n--------Tests CUnit--------\n");
+  printf("\n---------------------------\n");
+
+  init_test();
+
+  return EXIT_SUCCESS;
+  return 0;
+}
