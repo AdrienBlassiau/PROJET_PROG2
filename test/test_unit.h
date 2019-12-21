@@ -42,6 +42,6 @@ int init_test(void);
 /**
  * @brief	This function tests if pf is well formed.
  */
-void well_formed_pf(void);
+void test_sort(void);
 
 #endif

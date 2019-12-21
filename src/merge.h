@@ -20,10 +20,7 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 /** @file merge.h
  *
- * @brief Given  a  sequences stored  in  an  array, we compute the
- * maximal  monotonic cutpoints by scannings the array and storing every
- * index that corresponds to a change in monotonicity (from increasing to
- * decreasing, or viceversa).
+ * @brief Sort a list composed of increasing sublists
  */
 
 
@@ -33,7 +30,15 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #include "include.h"
 
 
-
+/**
+ * This function sort a list with a particular method
+ * @param  a           The list we want to sort
+ * @param  length      The length of the list a
+ * @param  sorted_list The list where we do the sorting
+ * @param  cutpoints   The list of cutpoints
+ * @param  cutlength   The length of list cutpoints
+ * @return             The sorted list
+ */
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength);
 
 

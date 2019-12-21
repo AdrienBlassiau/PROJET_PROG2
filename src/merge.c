@@ -109,6 +109,8 @@ int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, con
       loop invariant 0 <= x <= length_s;
       loop invariant 0 <= y <= length_t;
 
+      // loop invariant \forall integer j; 0 <= j < i ==> sorted_list[j] <= sorted_list[j+1];
+
       loop variant length_s+length_t+length-(x+y+i);
     */
     while (x < length_s && y < length_t && i < length){
