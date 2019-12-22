@@ -25,7 +25,7 @@ IMPORTANT: LIRE CE FICHIER AVANT DE LANCER LE PROGRAMME
 
 Ceci est le README du projet de PROG2 associé au Challenge **Monotonic Segments and GHC Sort**. Vous trouverez dans ce document toutes les informations nécessaires pour faire fonctionner le code.
 
-NOTE1: Nous vous invitons à lire notre rapport qui vous renseignera sur la démarche et les choix engagés dans ce projet.
+NOTE: Nous vous invitons à lire notre rapport qui vous renseignera sur la démarche et les choix engagés dans ce projet.
 
 
 2. Instructions d'installation des différents outils pour l'exécution du code
@@ -65,7 +65,7 @@ Voici différentes commandes qui vous permettrons d'observer des résultats et i
 Lancer l'analyse statique du code
 ------------------------
 
-Pour lancer l'analyse statique du code associé aux différentes parties du projets, entrez les commandes suivantes à la racine du projet
+Pour lancer l'analyse statique du code associé aux différentes parties du projet, entrez les commandes suivantes à la racine du projet
 
 **1. Entrez dans votre console** : 
 > frama-c-gui -wp -wp-rte -wp-timeout 20 src/monotonic_cutpoints.c
@@ -97,21 +97,28 @@ NOTE: Remplacez firefox par votre navigateur web favori.
 
 *Informations*
 
-Vous pouvez aussi régénérer la documentation puis l' ouvrir : 
+Vous pouvez aussi régénérer la documentation puis l'ouvrir : 
 
 **Entrez dans votre console** :
 > make doxygen && firefox doc/html/index.html &
 
  
 *********************************************************************************************
+
 Tests unitaires CUnit
 ---------------------
 
 Pour obtenir l'ensemble des résultats de nos tests unitaires : 
 
-**1. Entrez dans votre console** : 
-> make test & ./bin/test
+**Entrez dans votre console** : 
+> ./bin/test
 
+*Informations*
+
+Vous pouvez aussi régénérer l’exécutable de test : 
+
+**Entrez dans votre console** :
+> make test & ./bin/test
 
 *Comment lire le résultat d'un test CUnit ?*
 
