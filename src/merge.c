@@ -52,7 +52,9 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     assigns sorted_list[0 .. length-1];
     assigns a[0 .. length-1];
 
+    ensures same_elements: \forall integer i; 0 <= i < length ==> \exists integer j; 0 <= j < length ==> a[i] == \old(a[j]);
     // ensures sorted_result: \forall integer i; 0 <= i < length-1 ==> a[i] <= a[i+1];
+
 
 */
 int* merge(int* a, const size_t length, int* sorted_list, size_t* cutpoints, const size_t cutlength)
